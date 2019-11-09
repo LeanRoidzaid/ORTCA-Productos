@@ -59,13 +59,19 @@ app.get("/producto", function(req, res) {
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: body
- *         in: body
+ *       - in: query
+ *         name: token
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: body
  *         schema:
  *           properties:
+ *             id:
+ *               type: integer
  *             codbar:
  *               type: string
- *             GTIN:
+ *             nombre:
  *               type: string
  *             nSerie:
  *               type: string
@@ -103,7 +109,7 @@ app.post('/alta', verificaToken.verificaTokenMiddleware, verificaRol.esAdministr
         let movi = productos.insertarMovimiento(movimiento)
         if (movi != null){
             //console.log(movimiento);
-            res.status(200).send("Ingresaron " + req.body.cantDisp + " unidades de" + req.body.GTIN);
+            res.status(200).send("Ingresaron " + req.body.cantDisp + " unidades de " + req.body.nombre);
         }else {
             console.log(err);
             res.status(400).send('Error en el insert de movimiento' + err.message);
@@ -118,17 +124,21 @@ app.post('/alta', verificaToken.verificaTokenMiddleware, verificaRol.esAdministr
 
 /**
  * @swagger
- * /api/productos/ingreso:
+ * /api/productos/movimiento:
  *   post:
  *     tags:
- *       - Entran unidades al stock
+ *       - Registra movimiento de producto
  *     produces:
  *       - application/json
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: body
- *         in: body
+ *       - in: query
+ *         name: token
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: body
  *         schema:
  *           properties:
  *             codbar:
@@ -140,7 +150,7 @@ app.post('/alta', verificaToken.verificaTokenMiddleware, verificaRol.esAdministr
  *           - cantidad
  *     responses:
  *       200:
- *         description: se agrega un moviento y se actualiza la contidad disponible
+ *         description: Se agrega un moviento y se actualiza la contidad disponible
  *       401:
  *         description: Token invalido, no tiene permisos para ejecutar esta accion
  *       400:
@@ -180,7 +190,7 @@ function (req, res) {
  *           properties:
  *             codbar:
  *               type: string
- *             GTIN:
+ *             nombre:
  *               type: string
  *             nSerie:
  *               type: string

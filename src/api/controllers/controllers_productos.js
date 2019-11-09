@@ -5,10 +5,10 @@ exports.insertarProducto = function(producto){
     return PRODUCTOS.create({
         id: producto.id,
         codbar: producto.codbar, 
-        GTIN: producto.GTIN,
+        nombre: producto.GTIN,
         nSerie: producto.nSerie,
         codOrigen: producto.codOrigen,
-        canDisp: producto.canDisp
+        cantDisp: producto.cantDisp
        })
 }
 
